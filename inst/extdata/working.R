@@ -2,7 +2,8 @@ devtools::load_all()
 
 x <- mv_browse(chromever = "74.0.3729.6")
 
-y <- mv_agency(browser = x, agency = "SLMPD", statistic = "Stops")
+y <- mv_agency(browser = x, agency = "SLMPD", statistic = "Arrests")
+y2 <- mv_agency(browser = x, agency = "SLMPD", statistic = "Stops")
 
 library(ggplot2)
 library(dplyr)
