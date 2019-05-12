@@ -5,6 +5,7 @@
 #' @param statistic The statistic to download
 #' @param pause Number of seconds to pause while pages load - adjust as
 #'     needed depending on internet connection
+#' @param add_agency Append agency name to returned data
 #'
 #' @importFrom dplyr mutate rename
 #' @importFrom rvest html_nodes html_table
@@ -12,13 +13,17 @@
 #' @importFrom xml2 read_html
 #'
 #' @export
-mv_agency <- function(browser, agency, statistic, pause = 3){
+mv_get_agency <- function(browser, agency, statistic, pause = 3, add_agency = TRUE){
 
   # global bindings
   `2000` = `2017` = NULL
 
   # get agency id
-  ag <- mv_get_agency(agency = agency)
+  if (is.numeric(agency) == FALSE){
+    ag <- mv_agency_id(agency = agency)
+  } else if (is.numeric(agency) == TRUE){
+    ag <- agency
+  }
 
   # navigate browser
   browser$navigate(paste0("https://ago.mo.gov/home/vehicle-stops-report?lea=", ag))
@@ -55,21 +60,55 @@ mv_agency <- function(browser, agency, statistic, pause = 3){
 
   # pivot to long
   out <- tidyr::gather(df, key = "year", value = "value", `2000`:`2017`)
+
+  # tidy
   out <- dplyr::rename(out, cat = "")
   out <- dplyr::mutate(out, cat = ifelse(cat == "Native American", "Native", cat))
   out <- dplyr::mutate(out, cat = ifelse(cat == "Totals", "Total", cat))
+  out <- dplyr::arrange(out, cat)
+
+  # optionally add agency name
+  if (add_agency == TRUE){
+
+    # get name
+    name <- mv_agency_name(agency = ag)
+
+    # add name
+    out <- dplyr::mutate(out, agency = name)
+    out <- dplyr::select(out, agency, dplyr::everything())
+
+  }
+
+  # convert to tibble
+  out <- dplyr::as_tibble(out)
 
   # return output
   return(out)
 
 }
 
-mv_get_agency <- function(agency){
+mv_agency_id <- function(agency){
 
-  ag <- tolower(agency)
+  # load data
+  data <- agencies
 
-  if (ag == "slmpd" | agency == "st. louis city police dept" | agency == "st. louis city police dept" | agency == "st. louis metropolitan police department"){
-    out <- 587
-  }
+  # subset
+  data <- dplyr::filter(data, name == agency)
+
+  # return id
+  out <- data[[1]]
+
+}
+
+mv_agency_name <- function(agency){
+
+  # load data
+  data <- agencies
+
+  # subset
+  data <- dplyr::filter(data, id == agency)
+
+  # return id
+  out <- data[[2]]
 
 }
