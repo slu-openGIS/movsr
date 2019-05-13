@@ -32,10 +32,10 @@ Download a single agency's data from the Missouri Attorney
 The statistics that can be downloaded for each agency are as follows:
 
 \describe{
-    \item{\code{"Disparity"} or \code{"Disparity Index"}}{}
-    \item{\code{"Stops"} or \code{"Stop Rate"}}{}
-    \item{\code{"Searches"} or \code{"Search Rate"}}{}
-    \item{\code{"Arrests"} or \code{"Arrest Rate"}}{}
-    \item{\code{"Contraband"}, \code{"Hit Rate"}, or \code{"Contraband Hit Rate"}}{}
+    \item{\code{"Disparity"}}{}
+    \item{\code{"Stops"}}{}
+    \item{\code{"Searches"}}{}
+    \item{\code{"Arrests"}}{}
+    \item{\code{"Contraband"}}{}
 }
 }

@@ -1,0 +1,132 @@
+---
+title: "Analysis - 2017 Vehicle Stops"
+author: "Christopher Prener, Ph.D."
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis - 2017 Vehicle Stops}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# dependencies
+library(ggplot2)
+library(gghighlight)
+library(movsr)
+library(knitr)
+
+# data
+load(system.file("extdata", "data2017", package = "movsr"))
+```
+
+In exploring the [Missouri Attorney General's Office](https://ago.mo.gov/) [annual vehicle stop reports](https://ago.mo.gov/home/vehicle-stops-report/), it has become clear that the metrics they provide do not tell the full story when it comes to vehicle stops. This article breaks down a cross sectional data set of vehicle stop and disparity index data from 2017 for 52 police departments in St. Louis County as well as the St. Louis Metropolitan Police Department, which primarily serves the City of St. Louis.
+
+## Measures
+The two measures we'll be looking at are the African American proportion of total vehicle stops in 2017, as well as the [disparity index](https://ago.mo.gov/home/vehicle-stops-report/2017-executive-summary#findings). The disparity index is a positive value that revolves around the value of `1`:
+
+> For example, if a group accounts for 80% of the driving-age population, and 80% of traffic stops involve members of that group, then the disparity index for that group would be 1. 
+
+Disparity index values that are greater than `1` indicate that a group is being stopped more than we would expect:
+
+> The same is not the case for several of the other groups. African-Americans represent 10.9% of the driving-age population but 18.7% of all traffic stops, for a disparity-index value of 1.72. African-Americans were stopped at a rate 72% greater than expected based solely on their proportion of the driving-age population. 
+
+So, a disparity index value of `2` would indicate that they are being stopped at a rate 100% grater than expected, a value of `3` would indicate that they are being stopped at a rate that is 200% greater, and so on. 
+
+The Attorney General's office admits that this is an imperfect measure:
+
+> Importantly, the disparity index relies on a group’s proportion of the State’s driving-age population, as determined by the 2010 Census, not the proportion of the actual drivers who are on the State’s roads. A group’s share of the residential population age 16 and over may or may not equal its proportion of drivers. 
+
+Moreover:
+
+> In addition, some jurisdictions contain attractions—such as malls, universities, and airports—that may draw visitors from outside that jurisdiction. The demographics of these out-of-jurisdiction visitors may differ from the Census demographics of the jurisdiction. The disparity index does not account for these and other deficiencies in the data. Where these deficiencies are especially pronounced, especially at the level of individual jurisdictions, the disparity index may not accurately portray the relevant rates at which drivers of different races are stopped.
+
+Given these caveats, we'll pay particular attention to how the disparity index captures variation in the numbers of African Americans who are being stopped in St. Louis City and County.
+
+## Disparity Index and Proportion Stopped
+
+```{r plot-disparity-prop, echo = FALSE}
+ggplot(data2017, mapping = aes(x = prop, y = disp)) +
+  geom_hline(yintercept = 1, color = "#ff0000", alpha = .5, size = 1.5) +
+  geom_point(size = 2) +
+  scale_y_continuous(breaks=c(1,3,5,7,9,11,13,15)) +
+  labs(
+    title = "Race and the Disparity Index for Vehicle Stops",
+    subtitle = "St. Louis City and County Departments",
+    x = "African American Proportion of Total Stops",
+    y = "Disparity Index",
+    caption = "Plot by Christopher Prener, Ph.D.\nData via the Missouri Attorney General's Office"
+  )
+```
+
+Our first plot compares the African American proportion of stopped motorists to the disparity index value for each of the 53 police departments included in our sample. We can see that there is some wide variation - we have a number of departments with *very* high disparity index values, 
+
+## Replication Code
+To create the data set, the `mv_batch_agency()` function was used to scrape, format, and subset the data on number of vehicles stopped for each agency. This was called from within the `purrr` package's `map_df`, which iterated over a vector of police department identification numbers. Each department's data was subset down to a single observation for 2017, and then combined together into a single data set. A similar process was used to create a data set of disparity index values for each agency. They were then combined into a single table. A full script is available [here](https://github.com/slu-openGIS/movsr/blob/master/inst/extdata/data2017.R).
+
+```r
+# dependencies
+library(dplyr)      # data wrangling
+library(movsr)      # tools for scraping and cleaning vehicle stop reports
+library(purrr)      # iteration
+library(RSelenium)  # headless browsing
+
+# connect to headless browswer, which must be started in terminal (see Get started)
+remDr <- remoteDriver(port=4445L, browserName = "firefox")
+remDr$open()
+
+# create vector of agency ids to iterate over
+# focus only on agencies that had 2017 stop data
+depts <- filter(agencies, valid == TRUE)
+depts <- depts$id
+
+# download stop data and calculate proportions
+depts %>%
+  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Stops", format = "prop",
+                           category = "Black", year = 2017, pause = 1)) %>%
+  rename(prop = value) -> blackProp
+
+# download stop data and retain counts
+depts %>%
+  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Stops", format = "count",
+                           category = "Black", year = 2017, pause = 1)) %>%
+  select(agency, value) %>%
+  rename(count = value) -> blackCount
+
+# download disparity data and clean
+depts %>%
+  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Disparity", format = "index",
+                           category = "Black", year = 2017, pause = 1)) %>%
+  select(agency, value) %>%
+  rename(disp = value) -> blackDisp
+
+# combine data sets
+data2017 <- left_join(blackProp, blackCount, by = "agency")
+data2017 <- left_join(data2017, blackDisp, by = "agency")
+```
+
+If you'd like to replicate the plots as well, `ggplot2` and `gghighlight` are the primary tools for doing so. The following code replicates the second plot, showing departments with the highest disparity index values. All visualization code is available in the source for [this article](https://github.com/slu-openGIS/movsr/blob/master/vignettes/analysis-2017-vehicle-stops.Rmd).
+
+```r
+# plotting dependencies
+library(ggplot2)
+library(gghighlight)
+
+# create plot 2
+ggplot(data2017, mapping = aes(x = prop, y = disp)) +
+  geom_point(size = 2) +
+  gghighlight(disp > 10, label_key = agency) +
+  scale_y_continuous(breaks=c(1,3,5,7,9,11,13,15)) +
+  labs(
+    title = "Extreme Disparity Index for Vehicle Stops",
+    subtitle = "St. Louis City and County Departments",
+    x = "African American Proportion of Total Stops",
+    y = "Disparity Index",
+    caption = "Plot by Christopher Prener, Ph.D.\nData via the Missouri Attorney General's Office"
+  )
+```

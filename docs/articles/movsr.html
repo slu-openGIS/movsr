@@ -48,6 +48,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/analysis-2017-vehicle-stops.html">Analysis - 2017 Vehicle Stops</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -118,7 +130,7 @@
 <a href="#starting-a-headless-browser" class="anchor"></a>Starting a Headless Browser</h3>
 <p>Once Docker is installed and started, the following bash command can be used to get a headless browser running on macOS:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">docker</span> run -d -p 4445:4444 selenium/standalone-firefox</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; 34b77b5e688150feebf537c50ffb4653ef0bc84c1786b925b121ca5acde18c9f</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847c22dc0fb5381793d23108d71166a7e83eaaff92c5801555e229c</span></a></code></pre></div>
 </div>
 <div id="connecting-r-to-the-browser" class="section level3">
 <h3 class="hasAnchor">
@@ -257,16 +269,37 @@
 <a class="sourceLine" id="cb11-15" data-line-number="15">  )</a></code></pre></div>
 <p><img src="movsr_files/figure-html/plot-slmpd-1.png" width="700"></p>
 </div>
+<div id="creating-cross-sectional-data-sets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-cross-sectional-data-sets" class="anchor"></a>Creating Cross Sectional Data Sets</h2>
+<p>If you want to create a cross-sectional data set, use the <code><a href="../reference/mv_batch_agency.html">mv_batch_agency()</a></code> function to scrape, reformat, and subset all in one call. This can be fed to the <code>purrr</code> package’s <code><a href="https://purrr.tidyverse.org/reference/map.html">map_df()</a></code> function along with a vector of police department identification numbers. These numbers can be obtained from the individual agency pages on the <a href="https://ago.mo.gov/home/vehicle-stops-report/">annual vehicle stop reports</a>.</p>
+<p>The number at the end of the URL is the identification number. For example, the URL for the Jefferson City Police Department is:</p>
+<pre><code>https://ago.mo.gov/home/vehicle-stops-report?lea=266</code></pre>
+<p>The identification number would therefore be 266. If we wanted to download disparity data for Cole County (home of the state capital, Jefferson City), we would need create a vector with the relevant identification numbers:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">coleCounty &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">88</span>, <span class="dv">266</span>)</a></code></pre></div>
+<p>Only the Cole County Sheriff’s Department and the Jefferson City Police Department reported stops in 2017, and so we’ll limit our vector to those departments.</p>
+<p>Next, we create our pipeline with <code>purrr</code> and <code>dplyr</code> functions:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># load dependencies</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co"># create cross-sectional data set</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">coleCounty <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Disparity"</span>, <span class="dt">format =</span> <span class="st">"index"</span>,</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">                           <span class="dt">category =</span> <span class="st">"Black"</span>, <span class="dt">year =</span> <span class="dv">2017</span>, <span class="dt">pause =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">disp =</span> value) -&gt;<span class="st"> </span>coleCountyDisp</a></code></pre></div>
+<p>A full example of this workflow, including combining multiple measures into a single data set, can be found at the bottom of the 2017 vehicle stops analysis article.</p>
+</div>
 <div id="closing-down-our-session" class="section level2">
 <h2 class="hasAnchor">
 <a href="#closing-down-our-session" class="anchor"></a>Closing Down Our Session</h2>
 <p>Once we are done scraping, we can shut down our session:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">docker</span> stop <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; 34b77b5e6881</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">docker</span> stop <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847</span></a></code></pre></div>
 <p>This will shut down <em>all</em> Docker sessions, so if you are using other Docker tools, be forewarned!</p>
 <p>Finally, we’ll the delete the Docker image our session created to preserve space on our hard drive:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">docker</span> rm <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; 34b77b5e6881</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="ex">docker</span> rm <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847</span></a></code></pre></div>
 </div>
   </div>
 
@@ -278,6 +311,7 @@
 <li><a href="#install">Install</a></li>
       <li><a href="#web-scraping-with-docker-and-rselenium">Web Scraping with Docker and RSelenium</a></li>
       <li><a href="#plotting-data">Plotting Data</a></li>
+      <li><a href="#creating-cross-sectional-data-sets">Creating Cross Sectional Data Sets</a></li>
       <li><a href="#closing-down-our-session">Closing Down Our Session</a></li>
       </ul>
 </div>

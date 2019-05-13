@@ -6,11 +6,11 @@
 #' @details The statistics that can be downloaded for each agency are as follows:
 #'
 #' \describe{
-#'     \item{\code{"Disparity"} or \code{"Disparity Index"}}{}
-#'     \item{\code{"Stops"} or \code{"Stop Rate"}}{}
-#'     \item{\code{"Searches"} or \code{"Search Rate"}}{}
-#'     \item{\code{"Arrests"} or \code{"Arrest Rate"}}{}
-#'     \item{\code{"Contraband"}, \code{"Hit Rate"}, or \code{"Contraband Hit Rate"}}{}
+#'     \item{\code{"Disparity"}}{}
+#'     \item{\code{"Stops"}}{}
+#'     \item{\code{"Searches"}}{}
+#'     \item{\code{"Arrests"}}{}
+#'     \item{\code{"Contraband"}}{}
 #' }
 #'
 #' @return A tibble in 'long' format containing vehicle stop statistics for the
@@ -182,8 +182,8 @@ mv_batch_agency <- function(browser, agency, statistic, format, category, year, 
   data <- mv_get_agency(browser = browser, agency = agency, statistic = statistic, pause = pause)
 
   # reformat
-  if (statistic == "Stops"){
-    data <- mv_reformat(data, statistic = statistic, format = format)
+  if (statistic == "Stops" & format != "count"){
+    formatted_data <- mv_reformat(data, statistic = statistic, format = format)
   }
 
   # subset

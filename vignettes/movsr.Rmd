@@ -194,6 +194,39 @@ ggplot(data = slmpd_stops, mapping = aes(x = as.numeric(year), y = value, color 
   )
 ```
 
+## Creating Cross Sectional Data Sets
+If you want to create a cross-sectional data set, use the `mv_batch_agency()` function to scrape, reformat, and subset all in one call. This can be fed to the `purrr` package's `map_df()` function along with a vector of police department identification numbers. These numbers can be obtained from the individual agency pages on the [annual vehicle stop reports](https://ago.mo.gov/home/vehicle-stops-report/). 
+
+The number at the end of the URL is the identification number. For example, the URL for the Jefferson City Police Department is:
+
+```
+https://ago.mo.gov/home/vehicle-stops-report?lea=266
+```
+
+The identification number would therefore be 266. If we wanted to download disparity data for Cole County (home of the state capital, Jefferson City), we would need create a vector with the relevant identification numbers:
+
+```r
+coleCounty <- c(88, 266)
+```
+
+Only the Cole County Sheriff's Department and the Jefferson City Police Department reported stops in 2017, and so we'll limit our vector to those departments. 
+
+Next, we create our pipeline with `purrr` and `dplyr` functions:
+
+```r
+# load dependencies
+library(dplyr)
+library(purrr)
+
+# create cross-sectional data set
+coleCounty %>%
+  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Disparity", format = "index",
+                           category = "Black", year = 2017, pause = 1)) %>%
+  rename(disp = value) -> coleCountyDisp
+```
+
+A full example of this workflow, including combining multiple measures into a single data set, can be found at the bottom of the [2017 vehicle stops analysis article](articles/analysis-2017-vehicle-stops.html).
+
 ## Closing Down Our Session
 Once we are done scraping, we can shut down our session:
 
