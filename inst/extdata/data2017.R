@@ -33,8 +33,4 @@ depts %>%
 data2017 <- left_join(blackProp, blackDisp, by = "agency")
 
 # save data
-save(data2017, "inst/extdata/data2017.rda")
-
-
-mv_batch_agency(browser = remDr, agency = 376, statistic = "Disparity",
-                category = "Black", date = 2017, pause = 1)
+save(data2017, file = "inst/extdata/data2017.rda")
