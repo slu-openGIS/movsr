@@ -19,9 +19,9 @@ Imports:
     rvest,
     tidyr,
     xml2
-Suggests: 
-    gghighlight,
+Suggests:
     ggplot2,
+    ggrepel,
     knitr,
     RColorBrewer,
     rmarkdown
