@@ -7,17 +7,35 @@
 mv_get_agency(browser, agency, statistic, pause = 3, add_agency = TRUE)
 }
 \arguments{
-\item{browser}{A browser binding created with \link{mv_browse}}
+\item{browser}{Name of a browser binding created with \code{RSelenium}}
 
-\item{agency}{An agency name (currently only supports \code{"SLMPD"})}
+\item{agency}{An agency name (for St. Louis City and County agencies) or id number
+(for agencies statewide).}
 
 \item{statistic}{The statistic to download}
 
 \item{pause}{Number of seconds to pause while pages load - adjust as
 needed depending on internet connection}
 
-\item{add_agency}{Append agency name to returned data}
+\item{add_agency}{Append agency name to returned data; set to \code{FALSE} if you
+are downloading data outside of St. Louis City or County}
+}
+\value{
+A tibble in 'long' format containing vehicle stop statistics for the
+    requested agency. Data may need additional formatting - see \code{\link{mv_reformat}}.
 }
 \description{
-Download Agency Data
+Download a single agency's data from the Missouri Attorney
+    General's Office.
+}
+\details{
+The statistics that can be downloaded for each agency are as follows:
+
+\describe{
+    \item{\code{"Disparity"} or \code{"Disparity Index"}}{}
+    \item{\code{"Stops"} or \code{"Stop Rate"}}{}
+    \item{\code{"Searches"} or \code{"Search Rate"}}{}
+    \item{\code{"Arrests"} or \code{"Arrest Rate"}}{}
+    \item{\code{"Contraband"}, \code{"Hit Rate"}, or \code{"Contraband Hit Rate"}}{}
+}
 }

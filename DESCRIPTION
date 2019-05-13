@@ -1,12 +1,11 @@
 Package: movsr
 Type: Package
 Title: Scrape Vehicle Stop Data from the Missouri Attorney General's Office
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: person("Christopher", "Prener", , "chris.prener@slu.edu", c("aut", "cre"),
     comment = c(ORCID = "0000-0002-4310-9888"))
-Description: Creates a browser instance using RSelenium and then uses that to scrape
-    and format tables detailing disparities in vehicle stops that are not available
-    in machine readable format.
+Description: Use RSelenium to scrape and format tables detailing disparities in vehicle 
+    stops that are not available in machine readable format.
 Depends: R (>= 3.3)
 License: GPL-3
 URL: https://github.com/slu-openGIS/movsr
@@ -20,3 +19,7 @@ Imports:
     rvest,
     tidyr,
     xml2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

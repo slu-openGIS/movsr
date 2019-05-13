@@ -4,13 +4,19 @@
 \alias{mv_filter}
 \title{Subset Data}
 \usage{
-mv_filter(.data, category, date)
+mv_filter(.data, category, year)
 }
 \arguments{
-\item{.data}{A tbl}
+\item{.data}{A tbl created with \code{\link{mv_get_agency}}}
 
-\item{category}{}
+\item{category}{Category to extract}
+
+\item{year}{Year to extract}
+}
+\value{
+A tibble containing the subset data.
 }
 \description{
-Subset Data
+Subset data to extract a single category and time point for cross
+    sectional comparisons between departments.
 }

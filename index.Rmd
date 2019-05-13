@@ -1,0 +1,33 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/index-",
+  out.width = "100%"
+)
+```
+
+# movsr
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN_status_badge](http://www.r-pkg.org/badges/version/movsr)](https://cran.r-project.org/package=movsr)
+
+`movsr` is research software designed to scape and reformat the [Missouri Attorney General's Office](https://ago.mo.gov/) [annual vehicle stop reports](https://ago.mo.gov/home/vehicle-stops-report/). 
+
+## For Researchers
+This site offers a walk through in the [Get started article](articles/movsr.html) for using `movsr` for scraping and formating vehicle stop data as well as [documentation](reference/index.html) for project specific functions.
+
+The `movsr` software can be accessed from GitHub with `remotes`:
+
+```r
+# install.packages("remotes")
+remotes::install_github("slu-openGIS/movsr")
+```
+
+Additional details, including some tips for installing and using Docker, can be found in the [Get started article](articles/movsr.html#getting-started) as well.

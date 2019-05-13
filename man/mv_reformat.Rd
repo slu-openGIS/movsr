@@ -2,10 +2,32 @@
 % Please edit documentation in R/reformat.R
 \name{mv_reformat}
 \alias{mv_reformat}
-\title{Reformat}
+\title{Reformat Data}
 \usage{
 mv_reformat(.data, statistic, format, output = "long")
 }
+\arguments{
+\item{.data}{A tbl created with \code{\link{mv_get_agency}}}
+
+\item{statistic}{The statistic to reformat}
+
+\item{format}{Either \code{"pct"} for percentages or \code{"prop"} for propotions.}
+
+\item{output}{Either \code{"long"} or \code{"wide"}}
+}
+\value{
+A tibble with the reformatted data
+}
 \description{
-Reformat
+Converts raw counts to either percentage or proportion formats.
+}
+\details{
+The statistics that can be reformatted are as follows:
+
+\describe{
+    \item{\code{"Stops"} or \code{"Stop Rate"}}{}
+    \item{\code{"Searches"} or \code{"Search Rate"}}{}
+    \item{\code{"Arrests"} or \code{"Arrest Rate"}}{}
+    \item{\code{"Contraband"}, \code{"Hit Rate"}, or \code{"Contraband Hit Rate"}}{}
+}
 }
