@@ -99,12 +99,183 @@
 <div id="measures" class="section level2">
 <h2 class="hasAnchor">
 <a href="#measures" class="anchor"></a>Measures</h2>
-<p>The two measures we’ll be looking at are the African American proportion of total vehicle stops in 2017, as well as the</p>
+<p>The two measures we’ll be looking at are the African American proportion of total vehicle stops in 2017, as well as the <a href="https://ago.mo.gov/home/vehicle-stops-report/2017-executive-summary#findings">disparity index</a>. The disparity index is a positive value that revolves around the value of <code>1</code>:</p>
+<blockquote>
+<p>For example, if a group accounts for 80% of the driving-age population, and 80% of traffic stops involve members of that group, then the disparity index for that group would be 1.</p>
+</blockquote>
+<p>Disparity index values that are greater than <code>1</code> indicate that a group is being stopped more than we would expect:</p>
+<blockquote>
+<p>The same is not the case for several of the other groups. African-Americans represent 10.9% of the driving-age population but 18.7% of all traffic stops, for a disparity-index value of 1.72. African-Americans were stopped at a rate 72% greater than expected based solely on their proportion of the driving-age population.</p>
+</blockquote>
+<p>So, a disparity index value of <code>2</code> would indicate that they are being stopped at a rate 100% grater than expected, a value of <code>3</code> would indicate that they are being stopped at a rate that is 200% greater, and so on.</p>
+<p>The Attorney General’s office admits that this is an imperfect measure:</p>
+<blockquote>
+<p>Importantly, the disparity index relies on a group’s proportion of the State’s driving-age population, as determined by the 2010 Census, not the proportion of the actual drivers who are on the State’s roads. A group’s share of the residential population age 16 and over may or may not equal its proportion of drivers.</p>
+</blockquote>
+<p>Moreover:</p>
+<blockquote>
+<p>In addition, some jurisdictions contain attractions—such as malls, universities, and airports—that may draw visitors from outside that jurisdiction. The demographics of these out-of-jurisdiction visitors may differ from the Census demographics of the jurisdiction. The disparity index does not account for these and other deficiencies in the data. Where these deficiencies are especially pronounced, especially at the level of individual jurisdictions, the disparity index may not accurately portray the relevant rates at which drivers of different races are stopped.</p>
+</blockquote>
+<p>Given these caveats, we’ll pay particular attention to how the disparity index captures variation in the numbers of African Americans who are being stopped in St. Louis City and County.</p>
 </div>
-<div id="code" class="section level2">
+<div id="disparity-index-and-proportion-stopped" class="section level2">
 <h2 class="hasAnchor">
-<a href="#code" class="anchor"></a>Code</h2>
-<p>To create the data set, the <code><a href="../reference/mv_batch_agency.html">mv_batch_agency()</a></code> function was used to scrape, format, and subset the data on number of vehicles stopped for each agency. This was called from within the <code>purrr</code> package’s <code>map_df</code>, which iterated over a vector of police department identification numbers. Each department’s data was subset down to a single observation for 2017, and then combined together into a single data set. A similar process was used to create a data set of disparity index values for each agency. They were then combined into a single table.</p>
+<a href="#disparity-index-and-proportion-stopped" class="anchor"></a>Disparity Index and Proportion Stopped</h2>
+<p><img src="analysis-2017-vehicle-stops_files/figure-html/plot-disparity-prop-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p>Our first plot compares the African American proportion of stopped motorists to the disparity index value for each of the 53 police departments included in our sample. We can see that there is some wide variation - we have a number of departments with <em>very</em> high disparity index values. These departments all stop relatively small proportions of African American drivers, however. On the other end of the plot, there are quite a few departments that stop African Americans almost exclusively - five departments have stop rates that are more than 90% African American.</p>
+<p><img src="analysis-2017-vehicle-stops_files/figure-html/plot-low-disparity1-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p>There are also a few departments that do not appear to be systematically targeting African Americans based on the disparity index alone. Some of these departments are among those that stop very high proportions of African American drivers. This is an important takeaway - the proportion of drivers stopped can be misleading as well - despite black drivers making up over 90% of the drivers stopped in Velda City, for example, this proportional relative to what we would expect based on the population.</p>
+</div>
+<div id="high-disparity-index-departments" class="section level2">
+<h2 class="hasAnchor">
+<a href="#high-disparity-index-departments" class="anchor"></a>High Disparity Index Departments</h2>
+<p><img src="analysis-2017-vehicle-stops_files/figure-html/plot-high-disparity-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p>This third plot focuses on the opposite phenomenon - it highlights departments that have a disparity index over 7, i.e. they are stopping African Americans 600% more than we would expect given their proportion of the driving age population. At first blush, this seems deeply problematic. However, it is worth pointing out that some caution is needed here.</p>
+<table class="table">
+<caption>High Disparity Departments, 2017</caption>
+<thead><tr class="header">
+<th align="left">agency</th>
+<th align="right">prop</th>
+<th align="right">count</th>
+<th align="right">disp</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ladue</td>
+<td align="right">0.15</td>
+<td align="right">281</td>
+<td align="right">16.79</td>
+</tr>
+<tr class="even">
+<td align="left">Des Peres</td>
+<td align="right">0.15</td>
+<td align="right">84</td>
+<td align="right">15.87</td>
+</tr>
+<tr class="odd">
+<td align="left">Glendale</td>
+<td align="right">0.11</td>
+<td align="right">233</td>
+<td align="right">13.46</td>
+</tr>
+<tr class="even">
+<td align="left">Bella Villa</td>
+<td align="right">0.20</td>
+<td align="right">353</td>
+<td align="right">12.27</td>
+</tr>
+<tr class="odd">
+<td align="left">Sunset Hills</td>
+<td align="right">0.13</td>
+<td align="right">528</td>
+<td align="right">10.13</td>
+</tr>
+<tr class="even">
+<td align="left">Brentwood</td>
+<td align="right">0.29</td>
+<td align="right">418</td>
+<td align="right">9.93</td>
+</tr>
+<tr class="odd">
+<td align="left">Crestwood</td>
+<td align="right">0.13</td>
+<td align="right">304</td>
+<td align="right">9.70</td>
+</tr>
+<tr class="even">
+<td align="left">Warson Woods</td>
+<td align="right">0.05</td>
+<td align="right">11</td>
+<td align="right">8.82</td>
+</tr>
+<tr class="odd">
+<td align="left">Frontenac</td>
+<td align="right">0.18</td>
+<td align="right">401</td>
+<td align="right">7.57</td>
+</tr>
+<tr class="even">
+<td align="left">Shrewsbury</td>
+<td align="right">0.25</td>
+<td align="right">837</td>
+<td align="right">7.50</td>
+</tr>
+</tbody>
+</table>
+<p>If we take a look at the table, which corresponds to the plot above, we can see the number of African American drivers stopped (along with their proportion relative to the total number of drivers stopped). Warson Woods and Des Peres illustrate perfectly the problems with these extreme disparity values - very few African American drivers were stopped by either department. However, because the St. Louis area is so segregated, even stopping 11 black drivers (as Warson Woods did) can yield extremely high disparity index values.</p>
+<p>The data on Brentwood also illustrate the problem that was noted above about areas that might attract visitors from outside the municipality. Brentwood is home to a large amount of shopping, and that may account for the very high disparity index value shown here. This does not mean Brentwood is not targeting drivers systematically, only that caution is needed in interpreting what this value means.</p>
+</div>
+<div id="high-proportions-of-african-americans-stopped" class="section level2">
+<h2 class="hasAnchor">
+<a href="#high-proportions-of-african-americans-stopped" class="anchor"></a>High Proportions of African Americans Stopped</h2>
+<p><img src="analysis-2017-vehicle-stops_files/figure-html/plot-high-prop-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p>Each of the departments highlighted above stops a greater proportion of African American drivers than we would expect based on their population figures, and black drivers make up at least 75% of the drivers stopped by each department. There is considerable variation in these departments, however.</p>
+<table class="table">
+<caption>High Proportion Departments, 2017</caption>
+<thead><tr class="header">
+<th align="left">agency</th>
+<th align="right">prop</th>
+<th align="right">count</th>
+<th align="right">disp</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Florissant</td>
+<td align="right">0.76</td>
+<td align="right">9505</td>
+<td align="right">3.11</td>
+</tr>
+<tr class="even">
+<td align="left">Calverton</td>
+<td align="right">0.80</td>
+<td align="right">3055</td>
+<td align="right">2.20</td>
+</tr>
+<tr class="odd">
+<td align="left">Riverview</td>
+<td align="right">0.96</td>
+<td align="right">471</td>
+<td align="right">1.48</td>
+</tr>
+<tr class="even">
+<td align="left">Furguson</td>
+<td align="right">0.88</td>
+<td align="right">1213</td>
+<td align="right">1.40</td>
+</tr>
+<tr class="odd">
+<td align="left">Vinita Park</td>
+<td align="right">0.83</td>
+<td align="right">14114</td>
+<td align="right">1.32</td>
+</tr>
+<tr class="even">
+<td align="left">Bellefontaine Neighbors</td>
+<td align="right">0.90</td>
+<td align="right">895</td>
+<td align="right">1.31</td>
+</tr>
+<tr class="odd">
+<td align="left">Flordell Hills</td>
+<td align="right">0.96</td>
+<td align="right">523</td>
+<td align="right">1.07</td>
+</tr>
+<tr class="even">
+<td align="left">Moline Acres</td>
+<td align="right">0.92</td>
+<td align="right">1473</td>
+<td align="right">1.01</td>
+</tr>
+</tbody>
+</table>
+<p>Moline Acres and Flordell Hills are not far off where we would expect them to be, stopping 1% and 7% more drivers than the population expectations respectivey. Of the two agencies, Moline Acres stops far more drivers. At the other end of the spectrum, the Florissant Police Department stops 211% more African American drivers than we would expect, and the number of drivers is significant with 9,505 black drivers stopped in 2017. Vinita Park also stands out for a high number of stops - 14,114 black drivers stopped. However, their disparity index is significantly lower - they stop 32% more African Americans than we would expect.</p>
+<p>Again, this shows how a high proportion is not necessarily as problematic as it may seem (as in the case of Moline Acres). It also highlights how departments with the highest disparity index values (see above) appear far less problematic relative to departments like Vinita Park, Florissant, and Calverton.</p>
+</div>
+<div id="replication-code" class="section level2">
+<h2 class="hasAnchor">
+<a href="#replication-code" class="anchor"></a>Replication Code</h2>
+<p>To create the data set, the <code><a href="../reference/mv_batch_agency.html">mv_batch_agency()</a></code> function was used to scrape, format, and subset the data on number of vehicles stopped for each agency. This was called from within the <code>purrr</code> package’s <code>map_df</code>, which iterated over a vector of police department identification numbers. Each department’s data was subset down to a single observation for 2017, and then combined together into a single data set. A similar process was used to create a data set of disparity index values for each agency. They were then combined into a single table. A full script is available <a href="https://github.com/slu-openGIS/movsr/blob/master/inst/extdata/data2017.R">here</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># dependencies</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)      <span class="co"># data wrangling</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(movsr)      <span class="co"># tools for scraping and cleaning vehicle stop reports</span></a>
@@ -120,38 +291,53 @@
 <a class="sourceLine" id="cb1-13" data-line-number="13">depts &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(agencies, valid <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb1-14" data-line-number="14">depts &lt;-<span class="st"> </span>depts<span class="op">$</span>id</a>
 <a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># download stop data and clean</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># download stop data and calculate proportions</span></a>
 <a class="sourceLine" id="cb1-17" data-line-number="17">depts <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Stops"</span>, <span class="dt">format =</span> <span class="st">"prop"</span>,</a>
 <a class="sourceLine" id="cb1-19" data-line-number="19">                           <span class="dt">category =</span> <span class="st">"Black"</span>, <span class="dt">year =</span> <span class="dv">2017</span>, <span class="dt">pause =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">prop =</span> value) -&gt;<span class="st"> </span>blackProp</a>
 <a class="sourceLine" id="cb1-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co"># download disparity data and clean</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co"># download stop data and retain counts</span></a>
 <a class="sourceLine" id="cb1-23" data-line-number="23">depts <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Disparity"</span>,</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Stops"</span>, <span class="dt">format =</span> <span class="st">"count"</span>,</a>
 <a class="sourceLine" id="cb1-25" data-line-number="25">                           <span class="dt">category =</span> <span class="st">"Black"</span>, <span class="dt">year =</span> <span class="dv">2017</span>, <span class="dt">pause =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-26" data-line-number="26"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(agency, value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">disp =</span> value) -&gt;<span class="st"> </span>blackDisp</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">count =</span> value) -&gt;<span class="st"> </span>blackCount</a>
 <a class="sourceLine" id="cb1-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co"># combine data sets</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">data2017 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(blackProp, blackDisp, <span class="dt">by =</span> <span class="st">"agency"</span>)</a></code></pre></div>
-<p>If you’d like to replicate the plots as well, <code>ggplot2</code> and <code>gghighlight</code> are the primary tools for doing so. The following code replicates the second plot, showing departments with the highest disparity index values:</p>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co"># download disparity data and clean</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">depts <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Disparity"</span>, <span class="dt">format =</span> <span class="st">"index"</span>,</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">                           <span class="dt">category =</span> <span class="st">"Black"</span>, <span class="dt">year =</span> <span class="dv">2017</span>, <span class="dt">pause =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(agency, value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">disp =</span> value) -&gt;<span class="st"> </span>blackDisp</a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co"># combine data sets</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">data2017 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(blackProp, blackCount, <span class="dt">by =</span> <span class="st">"agency"</span>)</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">data2017 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(data2017, blackDisp, <span class="dt">by =</span> <span class="st">"agency"</span>)</a></code></pre></div>
+<p>If you’d like to replicate the plots as well, <code>ggplot2</code> and <code>ggrepel</code> are the primary tools for doing so. The following code replicates the second plot, showing departments with the highest disparity index values. All visualization code is available in the source for <a href="https://github.com/slu-openGIS/movsr/blob/master/vignettes/analysis-2017-vehicle-stops.Rmd">this article</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># plotting dependencies</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(gghighlight)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggrepel)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># create plot 2</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(data2017, <span class="dt">mapping =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> prop, <span class="dt">y =</span> disp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/gghighlight/topics/gghighlight">gghighlight</a></span>(disp <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>, <span class="dt">label_key =</span> agency) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">breaks=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">15</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="dt">title =</span> <span class="st">"Extreme Disparity Index for Vehicle Stops"</span>,</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="dt">subtitle =</span> <span class="st">"St. Louis City and County Departments"</span>,</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="dt">x =</span> <span class="st">"African American Proportion of Total Stops"</span>,</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">y =</span> <span class="st">"Disparity Index"</span>,</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">    <span class="dt">caption =</span> <span class="st">"Plot by Christopher Prener, Ph.D.</span><span class="ch">\n</span><span class="st">Data via the Missouri Attorney General's Office"</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">  )</a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># prepare plot 3 data</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">sub &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(data2017, disp <span class="op">&gt;</span><span class="st"> </span><span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(sub) &lt;-<span class="st"> </span>sub<span class="op">$</span>agency</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># create plot 3</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(data2017, <span class="dt">mapping =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> prop, <span class="dt">y =</span> disp)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(data2017, <span class="dt">mapping =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> prop, <span class="dt">y =</span> disp), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">color =</span> <span class="st">"#bababa"</span>, <span class="dt">fill =</span> <span class="st">"#bababa"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(sub, <span class="dt">mapping =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> prop, <span class="dt">y =</span> disp), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggrepel/topics/geom_text_repel">geom_label_repel</a></span>(sub, <span class="dt">mapping =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> prop, <span class="dt">y =</span> disp), <span class="dt">label =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(sub), <span class="dt">size =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                   <span class="dt">box.padding =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="fl">0.35</span>, <span class="st">"lines"</span>), <span class="dt">point.padding =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/reexports">unit</a></span>(<span class="fl">0.5</span>, <span class="st">"lines"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">breaks=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.6</span>, <span class="fl">.8</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">breaks=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">15</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="dt">title =</span> <span class="st">"Very High Disparity Index for Vehicle Stops, 2017"</span>,</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">    <span class="dt">subtitle =</span> <span class="st">"St. Louis City and County Departments"</span>,</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="dt">x =</span> <span class="st">"African American Proportion of Total Stops"</span>,</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">    <span class="dt">y =</span> <span class="st">"Disparity Index"</span>,</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">    <span class="dt">caption =</span> <span class="st">"Plot by Christopher Prener, Ph.D.</span><span class="ch">\n</span><span class="st">Data via the Missouri Attorney General's Office"</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">  )</a></code></pre></div>
 </div>
   </div>
 
@@ -161,7 +347,10 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#measures">Measures</a></li>
-      <li><a href="#code">Code</a></li>
+      <li><a href="#disparity-index-and-proportion-stopped">Disparity Index and Proportion Stopped</a></li>
+      <li><a href="#high-disparity-index-departments">High Disparity Index Departments</a></li>
+      <li><a href="#high-proportions-of-african-americans-stopped">High Proportions of African Americans Stopped</a></li>
+      <li><a href="#replication-code">Replication Code</a></li>
       </ul>
 </div>
       </div>

@@ -130,7 +130,7 @@
 <a href="#starting-a-headless-browser" class="anchor"></a>Starting a Headless Browser</h3>
 <p>Once Docker is installed and started, the following bash command can be used to get a headless browser running on macOS:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">docker</span> run -d -p 4445:4444 selenium/standalone-firefox</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847c22dc0fb5381793d23108d71166a7e83eaaff92c5801555e229c</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; de177cf38f591f3728980fa9ca8acb504128fd9ecb9de6b45595d0b377e6b754</span></a></code></pre></div>
 </div>
 <div id="connecting-r-to-the-browser" class="section level3">
 <h3 class="hasAnchor">
@@ -288,18 +288,18 @@
 <a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_df</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="../reference/mv_batch_agency.html">mv_batch_agency</a></span>(<span class="dt">browser =</span> remDr, <span class="dt">agency =</span> .x, <span class="dt">statistic =</span> <span class="st">"Disparity"</span>, <span class="dt">format =</span> <span class="st">"index"</span>,</a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">                           <span class="dt">category =</span> <span class="st">"Black"</span>, <span class="dt">year =</span> <span class="dv">2017</span>, <span class="dt">pause =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb14-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">disp =</span> value) -&gt;<span class="st"> </span>coleCountyDisp</a></code></pre></div>
-<p>A full example of this workflow, including combining multiple measures into a single data set, can be found at the bottom of the 2017 vehicle stops analysis article.</p>
+<p>A full example of this workflow, including combining multiple measures into a single data set, can be found at the bottom of the <a href="articles/analysis-2017-vehicle-stops.html">2017 vehicle stops analysis article</a>.</p>
 </div>
 <div id="closing-down-our-session" class="section level2">
 <h2 class="hasAnchor">
 <a href="#closing-down-our-session" class="anchor"></a>Closing Down Our Session</h2>
 <p>Once we are done scraping, we can shut down our session:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">docker</span> stop <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847</span></a></code></pre></div>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; de177cf38f59</span></a></code></pre></div>
 <p>This will shut down <em>all</em> Docker sessions, so if you are using other Docker tools, be forewarned!</p>
 <p>Finally, we’ll the delete the Docker image our session created to preserve space on our hard drive:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="ex">docker</span> rm <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; 5b3cfed40847</span></a></code></pre></div>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; de177cf38f59</span></a></code></pre></div>
 </div>
   </div>
 

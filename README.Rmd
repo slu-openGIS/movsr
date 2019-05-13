@@ -28,6 +28,9 @@ Yet, despite continued tracking of traffic stops at the state level since 2000 a
 
 ![](man/figures/plot-slmpd-1.png)
 
+## For Community Members
+This package's [website](https://slu-openGIS.github.io/movsr/) offers an [initial analyses](https://slu-openGIS.github.io/movsr/articles/analysis-2017-vehicle-stops.html) of the 2017 vehicle stop report data for St. Louis City and County.
+
 ## For Researchers
 The package's [website](https://slu-openGIS.github.io/movsr/) offers a walk through in the [Get started article](https://slu-openGIS.github.io/movsr/articles/movsr.html) for using `movsr` for scraping and formatting vehicle stop data as well as [documentation](https://slu-openGIS.github.io/movsr/reference/index.html) for project specific functions.
 

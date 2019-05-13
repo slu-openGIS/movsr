@@ -44,6 +44,13 @@ Department’s traffic data suggests that African Americans, who make up
 
 ![](man/figures/plot-slmpd-1.png)
 
+## For Community Members
+
+This package’s [website](https://slu-openGIS.github.io/movsr/) offers an
+[initial
+analyses](https://slu-openGIS.github.io/movsr/articles/analysis-2017-vehicle-stops.html)
+of the 2017 vehicle stop report data for St. Louis City and County.
+
 ## For Researchers
 
 The package’s [website](https://slu-openGIS.github.io/movsr/) offers a
