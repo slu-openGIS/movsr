@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download Agency Data — mv_get_agency • movsr</title>
+<title>Changelog • movsr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,7 @@
 
 
 
-<meta property="og:title" content="Download Agency Data — mv_get_agency" />
-
-<meta property="og:description" content="Download a single agency's data from the Missouri Attorney
-    General's Office." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -51,7 +47,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -106,77 +102,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download Agency Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/slu-openGIS/movsr/blob/master/R/get.R'><code>R/get.R</code></a></small>
-    <div class="hidden name"><code>mv_get_agency.Rd</code></div>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/slu-openGIS/movsr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Download a single agency's data from the Missouri Attorney
-    General's Office.</p>
-    
-    </div>
-
-    <pre class="usage"><span class='fu'>mv_get_agency</span>(<span class='no'>browser</span>, <span class='no'>agency</span>, <span class='no'>statistic</span>, <span class='kw'>pause</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>add_agency</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>browser</th>
-      <td><p>Name of a browser binding created with <code>RSelenium</code></p></td>
-    </tr>
-    <tr>
-      <th>agency</th>
-      <td><p>An agency name (for St. Louis City and County agencies) or id number
-(for agencies statewide).</p></td>
-    </tr>
-    <tr>
-      <th>statistic</th>
-      <td><p>The statistic to download</p></td>
-    </tr>
-    <tr>
-      <th>pause</th>
-      <td><p>Number of seconds to pause while pages load - adjust as
-needed depending on internet connection</p></td>
-    </tr>
-    <tr>
-      <th>add_agency</th>
-      <td><p>Append agency name to returned data; set to <code>FALSE</code> if you
-are downloading data outside of St. Louis City or County</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A tibble in 'long' format containing vehicle stop statistics for the
-    requested agency. Data may need additional formatting - see <code><a href='mv_reformat.html'>mv_reformat</a></code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The statistics that can be downloaded for each agency are as follows:</p>
-<dl class='dl-horizontal'>
-    <dt><code>"Disparity"</code> or <code>"Disparity Index"</code></dt><dd><p></p></dd>
-    <dt><code>"Stops"</code> or <code>"Stop Rate"</code></dt><dd><p></p></dd>
-    <dt><code>"Searches"</code> or <code>"Search Rate"</code></dt><dd><p></p></dd>
-    <dt><code>"Arrests"</code> or <code>"Arrest Rate"</code></dt><dd><p></p></dd>
-    <dt><code>"Contraband"</code>, <code>"Hit Rate"</code>, or <code>"Contraband Hit Rate"</code></dt><dd><p></p></dd>
-</dl>
-    
-
+    <div id="movsr-0-1-0-9000" class="section level1">
+<h1 class="page-header">
+<a href="#movsr-0-1-0-9000" class="anchor"></a>movsr 0.1.0.9000</h1>
+<ul>
+<li>Create basic web scraping functions.</li>
+<li>Create data wrangling functions for stops and disparities.</li>
+<li>Add general vignette introducing workflow.</li>
+<li>Add package infrastructure.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#movsr-0-1-0-9000">0.1.0.9000</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
       <footer>

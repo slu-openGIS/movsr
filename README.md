@@ -64,3 +64,9 @@ Additional details, including some tips for installing and using Docker,
 can be found in the [Get started
 article](https://slu-openGIS.github.io/movsr/articles/movsr.html#getting-started)
 as well.
+
+## Contributor Code of Conduct
+
+Please note that this project is released with a [Contributor Code of
+Conduct](.github/CODE_OF_CONDUCT.md). By participating in this project
+you agree to abide by its terms.

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//index.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//reference/agencies.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//reference/mv_batch_agency.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//reference/mv_filter.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//reference/mv_get_agency.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//reference/mv_reformat.html</loc>
+  </url>
+  <url>
+    <loc>https://slu-openGIS.github.io/movsr//articles/movsr.html</loc>
+  </url>
+</urlset>

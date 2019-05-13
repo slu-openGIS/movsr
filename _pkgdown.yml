@@ -1,0 +1,23 @@
+url: https://slu-openGIS.github.io/movsr/
+
+authors:
+  Christopher Prener:
+    href: https://chris-prener.github.io
+
+reference:
+  - title: "Web Scraping"
+    desc: "Functions for scraping vehicle stop data."
+    contents:
+    - mv_get_agency
+    - mv_batch_agency
+
+  - title: "Data Wrangling"
+    desc: "Functions for cleaning vehicle stop data."
+    contents:
+    - mv_reformat
+    - mv_filter
+
+  - title: "Data"
+    desc: "Data sets included in package."
+    contents:
+    - agencies

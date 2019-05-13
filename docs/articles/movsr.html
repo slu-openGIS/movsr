@@ -48,6 +48,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -115,7 +118,7 @@
 <a href="#starting-a-headless-browser" class="anchor"></a>Starting a Headless Browser</h3>
 <p>Once Docker is installed and started, the following bash command can be used to get a headless browser running on macOS:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">docker</span> run -d -p 4445:4444 selenium/standalone-firefox</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; aa23d1b57c9707978070a30482b9166cd785b15c2f56b61e7191e0b11f28835f</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; 34b77b5e688150feebf537c50ffb4653ef0bc84c1786b925b121ca5acde18c9f</span></a></code></pre></div>
 </div>
 <div id="connecting-r-to-the-browser" class="section level3">
 <h3 class="hasAnchor">
@@ -259,11 +262,11 @@
 <a href="#closing-down-our-session" class="anchor"></a>Closing Down Our Session</h2>
 <p>Once we are done scraping, we can shut down our session:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">docker</span> stop <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; aa23d1b57c97</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; 34b77b5e6881</span></a></code></pre></div>
 <p>This will shut down <em>all</em> Docker sessions, so if you are using other Docker tools, be forewarned!</p>
 <p>Finally, we’ll the delete the Docker image our session created to preserve space on our hard drive:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">docker</span> rm <span class="va">$(</span><span class="ex">docker</span> ps -a -q<span class="va">)</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; aa23d1b57c97</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; 34b77b5e6881</span></a></code></pre></div>
 </div>
   </div>
 
@@ -284,7 +287,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Christopher Prener.</p>
+  <p>Developed by <a href="https://chris-prener.github.io">Christopher Prener</a>.</p>
 </div>
 
 <div class="pkgdown">
