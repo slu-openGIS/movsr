@@ -34,7 +34,7 @@
 mv_get_agency <- function(browser, agency, statistic, pause = 3, add_agency = TRUE){
 
   # global bindings
-  `2000` = `2017` = NULL
+  `2000` = year = NULL
 
   # get agency id
   if (is.numeric(agency) == FALSE){
@@ -95,6 +95,7 @@ mv_get_agency <- function(browser, agency, statistic, pause = 3, add_agency = TR
   out <- dplyr::mutate(out, cat = ifelse(cat == "Native American", "Native", cat))
   out <- dplyr::mutate(out, cat = ifelse(cat == "Totals", "Total", cat))
   out <- dplyr::arrange(out, cat)
+  out <- dplyr::mutate(out, year = as.numeric(year))
 
   # optionally add agency name
   if (add_agency == TRUE){
@@ -174,6 +175,9 @@ mv_agency_name <- function(agency){
 #' @export
 mv_batch_agency <- function(browser, agency, statistic, format, category, year, pause = 3){
 
+  # issues with year argument
+  x <- as.character(year)
+
   # pull data
   data <- mv_get_agency(browser = browser, agency = agency, statistic = statistic, pause = pause)
 
@@ -183,7 +187,7 @@ mv_batch_agency <- function(browser, agency, statistic, format, category, year, 
   }
 
   # subset
-  out <- mv_filter(data, category = category, year = year)
+  out <- mv_filter(data, category = category, year = x)
 
   # return output
   return(out)

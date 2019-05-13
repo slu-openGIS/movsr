@@ -1,30 +1,3 @@
-devtools::load_all()
-library(dplyr)
-library(ggplot2)
-library(purrr)
-library(RSelenium)
-library(prener)
-
-remDr <- remoteDriver(port=4445L, browserName = "firefox")
-remDr$open()
-
-# create vector of agency ids to iterate over
-depts <- filter(agencies, valid == TRUE)
-depts <- depts$id
-
-#
-depts %>%
-  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Stops", format = "prop",
-                           category = "Black", date = 2017, pause = 1)) %>%
-  rename(prop = value) -> blackProp
-
-depts %>%
-  map_df(~ mv_batch_agency(browser = remDr, agency = .x, statistic = "Disparity", format = "prop",
-                           category = "Black", date = 2017, pause = 1)) %>%
-  select(agency, value) %>%
-  rename(disp = value) -> blackDisp
-
-race <- left_join(blackProp, blackDisp, by = "agency")
 
 ggplot(race, mapping = aes(x = prop, y = disp)) +
   geom_hline(yintercept = 1, color = "#ff0000", alpha = .5, size = 1.5) +

@@ -14,8 +14,11 @@
 #' @export
 mv_filter <- function(.data, category, year){
 
+  # convert year to numeric
+  val <- as.numeric(year)
+
   # subset
-  .data <- dplyr::filter(.data, cat == category & year == year)
+  .data <- dplyr::filter(.data, cat == category & year == val)
 
   # return output
   return(.data)
