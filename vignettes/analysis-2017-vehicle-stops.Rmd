@@ -22,7 +22,7 @@ library(movsr)
 library(knitr)
 
 # data
-load(system.file("extdata", "data2017", package = "movsr"))
+load(system.file("extdata", "data2017.rda", package = "movsr"))
 ```
 
 In exploring the [Missouri Attorney General's Office](https://ago.mo.gov/) [annual vehicle stop reports](https://ago.mo.gov/home/vehicle-stops-report/), it has become clear that the metrics they provide do not tell the full story when it comes to vehicle stops. This article breaks down a cross sectional data set of vehicle stop and disparity index data from 2017 for 52 police departments in St. Louis County as well as the St. Louis Metropolitan Police Department, which primarily serves the City of St. Louis.
@@ -54,6 +54,7 @@ Given these caveats, we'll pay particular attention to how the disparity index c
 ggplot(data2017, mapping = aes(x = prop, y = disp)) +
   geom_hline(yintercept = 1, color = "#ff0000", alpha = .5, size = 1.5) +
   geom_point(size = 2) +
+  scale_x_continuous(breaks=c(.2, .4, .6, .8, 1)) +
   scale_y_continuous(breaks=c(1,3,5,7,9,11,13,15)) +
   labs(
     title = "Race and the Disparity Index for Vehicle Stops",
@@ -64,7 +65,25 @@ ggplot(data2017, mapping = aes(x = prop, y = disp)) +
   )
 ```
 
-Our first plot compares the African American proportion of stopped motorists to the disparity index value for each of the 53 police departments included in our sample. We can see that there is some wide variation - we have a number of departments with *very* high disparity index values, 
+Our first plot compares the African American proportion of stopped motorists to the disparity index value for each of the 53 police departments included in our sample. We can see that there is some wide variation - we have a number of departments with *very* high disparity index values. These departments all stop relatively small proportions of African American drivers, however. On the other end of the plot, there are quite a few departments that stop African Americans almost exclusively - five departments have stop rates that are more than 90% African American.
+
+## High Disparity Index Departments
+
+```{r plot-high-disparity, echo = FALSE}
+ggplot(data2017, mapping = aes(x = prop, y = disp)) +
+  geom_point(size = 2) +
+  gghighlight(disp > 5, label_key = agency) +
+  scale_x_continuous(breaks=c(.2, .4, .6, .8, 1)) +
+  scale_y_continuous(breaks=c(1,3,5,7,9,11,13,15)) +
+  labs(
+    title = "Extreme Disparity Index for Vehicle Stops",
+    subtitle = "St. Louis City and County Departments",
+    x = "African American Proportion of Total Stops",
+    y = "Disparity Index",
+    caption = "Plot by Christopher Prener, Ph.D.\nData via the Missouri Attorney General's Office"
+  )
+```
+
 
 ## Replication Code
 To create the data set, the `mv_batch_agency()` function was used to scrape, format, and subset the data on number of vehicles stopped for each agency. This was called from within the `purrr` package's `map_df`, which iterated over a vector of police department identification numbers. Each department's data was subset down to a single observation for 2017, and then combined together into a single data set. A similar process was used to create a data set of disparity index values for each agency. They were then combined into a single table. A full script is available [here](https://github.com/slu-openGIS/movsr/blob/master/inst/extdata/data2017.R).
@@ -120,7 +139,8 @@ library(gghighlight)
 # create plot 2
 ggplot(data2017, mapping = aes(x = prop, y = disp)) +
   geom_point(size = 2) +
-  gghighlight(disp > 10, label_key = agency) +
+  gghighlight(disp > 5, label_key = agency) +
+  scale_x_continuous(breaks=c(.2, .4, .6, .8, 1)) +
   scale_y_continuous(breaks=c(1,3,5,7,9,11,13,15)) +
   labs(
     title = "Extreme Disparity Index for Vehicle Stops",
