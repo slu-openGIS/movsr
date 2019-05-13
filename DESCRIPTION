@@ -20,6 +20,8 @@ Imports:
     tidyr,
     xml2
 Suggests: 
+    ggplot2,
     knitr,
+    RColorBrewer,
     rmarkdown
 VignetteBuilder: knitr

@@ -153,7 +153,8 @@ With the connection open, we can begin scraping using `movsr` functions. For exa
 slmpd_stops <- mv_get_agency(browser = remDr, agency = 587, statistic = "Stops", pause = 1)
 ```
 ```{r include=FALSE}
-system.file("extdata", "slmpd_stops.rda", package = "movsr")
+library(movsr)
+load(system.file("extdata", "slmpd_stops.rda", package = "movsr"))
 ```
 
 ```{r}
@@ -181,8 +182,7 @@ library(ggplot2)
 library(RColorBrewer)
 
 # create plot
-slmpd_stops %>%
-  ggplot(mapping = aes(x = as.numeric(year), y = value, color = cat)) +
+ggplot(data = slmpd_stops, mapping = aes(x = as.numeric(year), y = value, color = cat)) +
   geom_line(size = 2) +
   scale_colour_brewer(palette = "Dark2", name = "Race") +
   labs(
