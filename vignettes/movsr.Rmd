@@ -69,78 +69,78 @@ remDr <- remoteDriver(port=4445L, browserName = "firefox")
 Finally, we need to open that connection with `remDr$open()`:
 
 ```r
-> remDr$open()
-[1] "Connecting to remote server"
-$acceptInsecureCerts
-[1] FALSE
-
-$browserName
-[1] "firefox"
-
-$browserVersion
-[1] "66.0.3"
-
-$`moz:accessibilityChecks`
-[1] FALSE
-
-$`moz:geckodriverVersion`
-[1] "0.24.0"
-
-$`moz:headless`
-[1] FALSE
-
-$`moz:processID`
-[1] 51
-
-$`moz:profile`
-[1] "/tmp/rust_mozprofile.Z0YA0KVLIC9G"
-
-$`moz:shutdownTimeout`
-[1] 60000
-
-$`moz:useNonSpecCompliantPointerOrigin`
-[1] FALSE
-
-$`moz:webdriverClick`
-[1] TRUE
-
-$pageLoadStrategy
-[1] "normal"
-
-$platformName
-[1] "linux"
-
-$platformVersion
-[1] "4.9.87-linuxkit-aufs"
-
-$rotatable
-[1] FALSE
-
-$setWindowRect
-[1] TRUE
-
-$strictFileInteractability
-[1] FALSE
-
-$timeouts
-$timeouts$implicit
-[1] 0
-
-$timeouts$pageLoad
-[1] 300000
-
-$timeouts$script
-[1] 30000
-
-
-$unhandledPromptBehavior
-[1] "dismiss and notify"
-
-$webdriver.remote.sessionid
-[1] "9de4421f-9b2e-41cd-86c5-b26d23d00f0f"
-
-$id
-[1] "9de4421f-9b2e-41cd-86c5-b26d23d00f0f"
+remDr$open()
+#> [1] "Connecting to remote server"
+#> $acceptInsecureCerts
+#> [1] FALSE
+#> 
+#> $browserName
+#> [1] "firefox"
+#> 
+#> $browserVersion
+#> [1] "66.0.3"
+#> 
+#> $`moz:accessibilityChecks`
+#> [1] FALSE
+#> 
+#> $`moz:geckodriverVersion`
+#> [1] "0.24.0"
+#> 
+#> $`moz:headless`
+#> [1] FALSE
+#> 
+#> $`moz:processID`
+#> [1] 51
+#> 
+#> $`moz:profile`
+#> [1] "/tmp/rust_mozprofile.Z0YA0KVLIC9G"
+#> 
+#> $`moz:shutdownTimeout`
+#> [1] 60000
+#> 
+#> $`moz:useNonSpecCompliantPointerOrigin`
+#> [1] FALSE
+#> 
+#> $`moz:webdriverClick`
+#> [1] TRUE
+#> 
+#> $pageLoadStrategy
+#> [1] "normal"
+#> 
+#> $platformName
+#> [1] "linux"
+#> 
+#> $platformVersion
+#> [1] "4.9.87-linuxkit-aufs"
+#> 
+#> $rotatable
+#> [1] FALSE
+#> 
+#> $setWindowRect
+#> [1] TRUE
+#> 
+#> $strictFileInteractability
+#> [1] FALSE
+#> 
+#> $timeouts
+#> $timeouts$implicit
+#> [1] 0
+#> 
+#> $timeouts$pageLoad
+#> [1] 300000
+#> 
+#> $timeouts$script
+#> [1] 30000
+#> 
+#> 
+#> $unhandledPromptBehavior
+#> [1] "dismiss and notify"
+#> 
+#> $webdriver.remote.sessionid
+#> [1] "9de4421f-9b2e-41cd-86c5-b26d23d00f0f"
+#> 
+#> $id
+#> [1] "9de4421f-9b2e-41cd-86c5-b26d23d00f0f"
 ```
 
 For details on using `RSelenium` on other operating systems with Docker, see the [relevant vignette](https://ropensci.github.io/RSelenium/articles/docker.html) on the [`RSelenium` package website](https://ropensci.github.io/RSelenium/).
@@ -173,7 +173,7 @@ head(slmpd_stops)
 
 Using proportions or percentage values gives us the proper context for understanding if 441 stops of Asian drivers in 2002 is a large or small number relative to the total number of stops made that year.
 
-### Plotting Data
+## Plotting Data
 With a data set of proportions created, we can plot the trends in traffic stops by race using `ggplot2`:
 
 ```{r plot-slmpd}
@@ -183,11 +183,11 @@ library(RColorBrewer)
 
 # create plot
 ggplot(data = slmpd_stops, mapping = aes(x = as.numeric(year), y = value, color = cat)) +
-  geom_line(size = 2) +
+  geom_line(size = 1.5) +
   scale_colour_brewer(palette = "Dark2", name = "Race") +
   labs(
     title = "Racial Breakdown of Traffic Stops",
-    subtitle = "St. Louis County Police Department",
+    subtitle = "St. Louis Metropolitan Police Department",
     x = "Year",
     y = "Proportion of Total Stops",
     caption = "Plot by Christopher Prener, Ph.D.\nData via the Missouri Attorney General's Office"

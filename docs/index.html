@@ -73,15 +73,21 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="movsr" class="section level1">
+<div id="movsr---missouri-vehicle-stops-report-data" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#movsr" class="anchor"></a>movsr</h1></div>
+<a href="#movsr---missouri-vehicle-stops-report-data" class="anchor"></a>movsr - Missouri Vehicle Stops Report Data</h1></div>
 
-<p><code>movsr</code> is research software designed to scape and reformat the <a href="https://ago.mo.gov/">Missouri Attorney General’s Office</a> <a href="https://ago.mo.gov/home/vehicle-stops-report/">annual vehicle stop reports</a>.</p>
+<p><code>movsr</code> is research software designed to scrape and reformat the <a href="https://ago.mo.gov/">Missouri Attorney General’s Office</a> <a href="https://ago.mo.gov/home/vehicle-stops-report/">annual vehicle stop reports</a>. These data are important because they have the potential to reveal continued inequities in Missouri’s criminal justice system. The Department of Justice’s <a href="https://www.justice.gov/sites/default/files/opa/press-releases/attachments/2015/03/04/ferguson_police_department_report.pdf">report</a> on the Ferguson Police Department, for example, highlights the way traffic tickets have been as an approach to revenue generation:</p>
+<blockquote>
+<p>Ferguson has allowed its focus on revenue generation to fundamentally compromise the role of Ferguson’s municipal court. The municipal court does not act as a neutral arbiter of the law or a check on unlawful police conduct. Instead, the court primarily uses its judicial authority as the means to compel the payment of fines and fees that advance the City’s financial interests. This has led to court practices that violate the Fourteenth Amendment’s due process and equal protection requirements. The court’s practices also impose unnecessary harm, overwhelmingly on African-American individuals, and run counter to public safety.</p>
+</blockquote>
+<p>These same practices have also been discussed in the <a href="https://forwardthroughferguson.org/">Ferguson Commission’s report</a> and have been the subject of <a href="https://www.stltoday.com/news/local/crime-and-courts/st-louis-county-municipal-courts-agree-to-uniform-fines-court/article_7851b8a5-52d3-59e6-804c-4f2883acbc77.html">some attempted reforms</a>.</p>
+<p>Yet, despite continued tracking of traffic stops at the state level since 2000 and the increased attention paid to policing practices in the region after <a href="https://en.wikipedia.org/wiki/Shooting_of_Michael_Brown">Michael Brown’s death</a>, disparities in traffic stops remain. Many departments stop greater numbers of African Americans than the composition of the driving age population would predict. For example, the St. Louis Metropolitan Police Department’s traffic data suggests that African Americans, who make up 45% of the city’s population, account for over 60% of traffic stops:</p>
+<p><img src="reference/figures/plot-slmpd-1.png"></p>
 <div id="for-researchers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#for-researchers" class="anchor"></a>For Researchers</h2>
-<p>This site offers a walk through in the <a href="articles/movsr.html">Get started article</a> for using <code>movsr</code> for scraping and formating vehicle stop data as well as <a href="reference/index.html">documentation</a> for project specific functions.</p>
+<p>This site offers a walk through in the <a href="articles/movsr.html">Get started article</a> for using <code>movsr</code> for scraping and formatting vehicle stop data as well as <a href="reference/index.html">documentation</a> for project specific functions.</p>
 <p>The <code>movsr</code> software can be accessed from GitHub with <code>remotes</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"slu-openGIS/movsr"</span>)</a></code></pre></div>
