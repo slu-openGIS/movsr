@@ -16,7 +16,12 @@ RoxygenNote: 6.1.1
 Imports: 
     dplyr,
     RSelenium,
+    measurements,
     rvest,
+    sf,
+    sp,
+    spdep,
+    tibble,
     tidyr,
     xml2
 Suggests:
